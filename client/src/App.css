@@ -1,0 +1,308 @@
+#App {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  --primary-color: #1266cc;
+  --secondary-color: #f96400;
+  --flash-color: rgb(89, 255, 0);
+  --gray: #999;
+  --light-gray: #e0e0e0;
+  --dark-gray: #777;
+}
+
+#App .container {
+  width: 100%;
+  height: 100%;
+}
+
+code {
+  display: block;
+  white-space: pre-wrap;
+  padding: 1.2rem 2rem;
+  border-radius: 1rem;
+  background-color: var(--light-gray);
+  font-size: 1.4rem;
+}
+
+code span {
+  transition: all 0.3s;
+}
+
+code span.primary-color {
+  color: var(--primary-color);
+}
+
+code span.secondary-color {
+  color: var(--secondary-color);
+}
+
+code span.dim-color {
+  color: var(--gray);
+}
+
+code span.flash {
+  background-color: var(--flash-color);
+}
+
+details {
+  margin: 1.6rem 0;
+  padding: 0.5rem 2rem 0.5rem 0;
+  border: 1px solid var(--light-gray);
+  border-radius: 1rem;
+}
+
+details :not(summary, span) {
+  margin-left: 2.55rem;
+}
+
+details summary {
+  padding: 1.2rem;
+  cursor: pointer;
+}
+
+p,
+details code {
+  margin-top: 1rem;
+  margin-bottom: 1.4rem;
+}
+
+p {
+  line-height: 2.6rem;
+}
+
+p span.code {
+  font-family: monospace;
+  color: var(--gray);
+}
+
+hr {
+  margin: 4rem 0;
+}
+
+#App .container .welcome h1 {
+  padding-top: 7.5rem;
+  font-size: 2.6rem;
+}
+
+#App .container .demo .contract-container {
+  display: flex;
+}
+
+#App .container .demo .contract-container code {
+  min-width: 42rem;
+  border-radius: 1rem 0 0 1rem;
+}
+
+#App .container .demo .contract-container .btns {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0 1rem;
+  background-color: var(--gray);
+  border-radius: 0 1rem 1rem 0;
+}
+
+#App .container .demo .contract-container .btns>* {
+  width: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+  background-color: var(--light-gray);
+  border: none;
+  font-size: 1.2rem;
+  font-family: monospace;
+  cursor: pointer;
+}
+
+#App .container .demo .contract-container .btns>*:hover {
+  background-color: var(--dark-gray);
+}
+
+#App .container .demo .contract-container .btns .input-btn input {
+  width: 4rem;
+  text-align: center;
+  font-family: monospace;
+  font-size: 1.2rem;
+}
+
+#App .container footer {
+  padding-bottom: 7.5rem;
+}
+
+#App .container footer a {
+  display: inline-block;
+  margin: 2rem 1rem 0 0;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  height: 35px;
+  background-color: #1266cc;
+  margin-bottom: 20px;
+}
+
+.header span {
+  display: block;
+}
+
+.btnWrapper {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.appBtn {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 10px;
+  background-color: #ead46a;
+  display: flex;
+  justify-content: space-between;
+  line-height: 100px;
+}
+
+.appBtn:hover{
+  background-color: #6aea94;
+  cursor: pointer;
+}
+
+.appBtn span{
+  margin-left: 20px;
+}
+
+.appBtn .btnImg {
+  width: 20%;
+}
+
+.appBtn .btnText {
+  width: 80%;
+}
+
+.workflowContainer {
+  height: 50px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
+}
+
+.whitelistContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.8rem;
+}
+
+.proposalContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.8rem;
+}
+
+.tableContainer {
+  height: 90%;
+  width: 100%;
+  overflow: auto;
+}
+
+.tableContainer table {
+  width: 100%;
+}
+
+.tableContainer thead{
+  text-align: center;
+  background-color: #ccc;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1040;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1050;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  outline: 0;
+  display: flex;
+  align-items: center;
+}
+
+.modal {
+  z-index: 100;
+  background: #fff;
+  overflow: hidden;
+  position: relative;
+  height: 60%;
+  margin: auto;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 80%;
+  padding: 1rem;
+}
+
+.modal-header {
+  display: flex;
+  font-size: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.modal-close-button {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.modal-body {
+  height: 90%;
+  overflow: auto;
+}
+
+.disabled {
+  background-color: #888;
+  cursor: default;
+}
+
+.voteInput {
+  margin-bottom: 20px;
+}
+
+.resultContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.8rem;
+  text-align: center;
+  line-height: 30px;
+}
