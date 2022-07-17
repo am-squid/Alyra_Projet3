@@ -1,3 +1,4 @@
+import { IoIdCard, IoReceipt, IoFileTray, IoTrophy } from "react-icons/io5";
 
 function AppBtn ({type, show, currentState}) {
 
@@ -44,6 +45,21 @@ function AppBtn ({type, show, currentState}) {
         show();
     }
 
+    const getIcon = () => {
+        if(type === "voters"){
+            return (<IoIdCard />);
+        }
+        if(type === "proposals"){
+            return (<IoReceipt />);
+        }
+        if(type === "voting"){
+            return (<IoFileTray />);
+        }
+        if(type === "result"){
+            return (<IoTrophy />)
+        }
+    }
+
     let className = "appBtn";
     if(currentState < 1 && type === "proposals") {
         className += " disabled";
@@ -59,7 +75,7 @@ function AppBtn ({type, show, currentState}) {
 
     return(
         <div className={className} onClick={toggleVisibility}>
-            <div className="btnImg">IMG</div>
+            <div className="btnImg">{getIcon()}</div>
             <div className="btnText">{getText()}</div>
         </div>
     );
