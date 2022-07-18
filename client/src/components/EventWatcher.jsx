@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useEth } from "../contexts/EthContext";
 
-function EventWatcher({currentState, changeState, addVoter, addToProposalList, addToVoteList, voters, setVoterStatus}) {
-    const { state: { contract, accounts, isOwner } } = useEth();
+function EventWatcher({currentState, changeState, addVoter, addToProposalList, addToVoteList, voters, setVoterStatus, votes, setVotedStatus}) {
+    const { state: { contract, accounts } } = useEth();
     const [isInit, setIsInit] = useState(true);
 
     // Refresh and store a list of all events at application's startup
@@ -37,6 +37,14 @@ function EventWatcher({currentState, changeState, addVoter, addToProposalList, a
             const listVote = await contract.getPastEvents('Voted', { fromBlock: 0, toBlock: 'latest' });
             listVote.map(async (vote) => {
                 addVote(vote, false);
+            });
+
+            // Updating the voted status 
+            votes.map((vote)=>{
+                if(vote.address === accounts[0])
+                {
+                    setVotedStatus(true);
+                }
             });
         }
     }
@@ -98,6 +106,8 @@ function EventWatcher({currentState, changeState, addVoter, addToProposalList, a
             })
             
         }
+        // Updating the voter status 
+        setVoterStatus(voters.includes(accounts[0]));
 
     }, [contract, accounts, currentState]);
 }

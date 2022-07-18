@@ -5,30 +5,16 @@ function Header({isVoter}) {
     const { state: { accounts, isOwner } } = useEth();
     const [userAddress, setUserAddress] = useState("");
 
-    const getUserRole = () => {
-        let message = "";
-        if (isOwner) {
-            message += "Vous êtes Admin sur ce contrat. ";
-        }
-        if (isVoter) {
-            message += "Vous êtes autorisé à voter";
-        }else{
-            message += "Vous n'êtes pas autorisé à voter";
-        }
-        return message;
-    }
-
-
-
-
-    const updateUserAddress = () => {
-        if(accounts !== null) {
-            setUserAddress(accounts[0]);
-        }        
-    }
+    
 
     useEffect(() => {
-        updateUserAddress();
+        const updateUserAddress = () => {
+            if(accounts !== null) {
+                setUserAddress(accounts[0]);
+            }        
+        }
+
+        updateUserAddress();        
     }, [accounts]);
 
     const logo = (<svg width="100%" height="100%" viewBox="0 0 215 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,13 +26,22 @@ function Header({isVoter}) {
     );
 
     return(
-        <div className="header">
+        <div className="header ">
             <div className="logo">
                 {logo}
             </div>
             <div className="profileCard">
                 <span>Bonjour {userAddress}</span>
-                <span>{getUserRole()}</span>
+                <span>
+                    {isOwner 
+                        ? 'Vous êtes Admin sur ce contrat.'
+                        :  ''
+                    } 
+                    {isVoter
+                        ? ' Vous êtes autorisé à voter.'
+                        : " Vous n'êtes pas autorisé à voter."
+                    }          
+                </span>
             </div>
         </div>
     );

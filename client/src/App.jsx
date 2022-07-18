@@ -15,6 +15,7 @@ import Result from "./components/Result";
 function App() {
   const [workflowState, setWorkflowState] = useState(0);
   const [isVoter, setIsVoter] = useState(false);
+  const [hasVoted, setHasVoted] = useState(false);
   const [voterList, setVoterList] = useState([]);
   const [proposalList, setProposalList] = useState([]);
   const [voteList, setVoteList] = useState([]);
@@ -31,6 +32,13 @@ function App() {
     let tempList = voterList;
     voterList.push(voter);
     setVoterList(tempList);
+  }
+
+  const calcIfVoter = (userAddress, newAdress) => {
+    if(!isVoter)
+    {
+      setIsVoter(userAddress === newAdress);
+    }
   }
 
   const addProposalToList = (proposal) => {
@@ -83,10 +91,12 @@ function App() {
         addToVoteList={addVoteToList}
         voters={voterList}
         setVoterStatus={setIsVoter}
+        votes={voteList}
+        setVotedStatus={setHasVoted}
       />
       <div id="App" >
         <div className="container">
-          <Header isVoter={isVoter}/>
+          <Header isVoter={isVoter} voters={voterList} setVoterStatus={setIsVoter}/>
           <Workflow currentState={workflowState}/>
           <div className="btnWrapper">
             <AppBtn type="voters" show={toggleVoterList} currentState={workflowState} isVoter={isVoter}/>
@@ -95,13 +105,13 @@ function App() {
             <AppBtn type="result" show={toggleResult} currentState={workflowState} isVoter={isVoter}/>
 
             <Modal isShowing={isVoterListVisible} hide={toggleVoterList} title="Liste des votants">
-              <Whitelist currentState={workflowState} voters={voterList}/>
+              <Whitelist currentState={workflowState} voters={voterList} checkVoterState={calcIfVoter}/>
             </Modal>
             <Modal isShowing={areProposalsVisible} hide={toggleProposals} title="Liste des propositions">
               <Proposals currentState={workflowState} proposals={proposalList}/>
             </Modal>
             <Modal isShowing={isVotingVisible} hide={toggleVoting} title="Voter">
-              <Vote currentState={workflowState} votes={voteList}/>
+              <Vote votes={voteList} alreadyVoted={hasVoted} setVotedState={setHasVoted}/>
             </Modal>
             <Modal isShowing={isResultVisible} hide={toggleResult} title="Resultat">
               <Result currentState={workflowState} proposals={proposalList} />

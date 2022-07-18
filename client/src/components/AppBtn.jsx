@@ -20,7 +20,7 @@ function AppBtn ({type, show, currentState, isVoter}) {
                 text="Liste des propositions";
                 return text;
             case "voting": 
-                if(currentState != 3) {
+                if(currentState !== 3) {
                     text="Les votes ne sont pas ouverts";
                     return text;
                 }
@@ -31,7 +31,7 @@ function AppBtn ({type, show, currentState, isVoter}) {
                 text="Voter";
                 return text;
             case "result":
-                if(currentState != 5) {
+                if(currentState !== 5) {
                     return "Les résultats ne sont pas encore disponibles";
                 }
                 if (!isVoter) {
@@ -48,10 +48,10 @@ function AppBtn ({type, show, currentState, isVoter}) {
         if(type === "proposals" && (currentState < 1 || !isVoter)){
             return;
         }
-        if(type === "voting" && (currentState != 3 || !isVoter)) {
+        if(type === "voting" && (currentState !== 3 || !isVoter)) {
             return;
         }
-        if(type === "result" && (currentState != 5 || !isVoter )) {
+        if(type === "result" && (currentState !== 5 || !isVoter )) {
             return;
         }
         show();
@@ -77,11 +77,11 @@ function AppBtn ({type, show, currentState, isVoter}) {
         className = "appBtn disabled";
     }
 
-    if(currentState != 3 && type === "voting") {
+    if(currentState !== 3 && type === "voting") {
         className = "appBtn disabled";
     }
 
-    if(currentState != 5 && type === "result") {
+    if(currentState !== 5 && type === "result") {
         className = "appBtn disabled";
     }
 

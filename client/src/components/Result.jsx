@@ -7,7 +7,6 @@ function Result ({currentState, proposals}) {
     const { state: { contract, accounts } } = useEth();
 
     const updateWinnerId = async () => {
-        console.log(await contract.methods.winningProposalID().call({from: accounts[0]}));
         setWinnerId(await contract.methods.winningProposalID().call({from: accounts[0]}));
     }
 

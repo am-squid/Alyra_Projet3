@@ -274,17 +274,18 @@ hr {
   font-size: 1.8rem;
 }
 
-.tableContainer {
-  height: 90%;
+.votesContainer{
+  height: 100%;
   width: 100%;
+  font-size: 1.5rem;
   overflow: auto;
 }
 
-.tableContainer table {
+.votesContainer table {
   width: 100%;
 }
 
-.tableContainer thead{
+.votesContainer thead, .votesContainer td{
   text-align: center;
 }
 
