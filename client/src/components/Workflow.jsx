@@ -67,8 +67,11 @@ function Workflow({currentState}) {
 
     return (
         <div className="workflowContainer">
-            <div>
-                Etape : {statusList[currentState]}
+            <div className="currentStateText">
+                    <div>
+                        {<IoMap />}
+                    </div>
+                    {statusList[currentState]}
             </div>
         </div>
     );
