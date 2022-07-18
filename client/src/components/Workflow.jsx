@@ -1,6 +1,5 @@
-import { useEffect } from "react";
-import { useState } from "react";
 import useEth from "../contexts/EthContext/useEth";
+import {IoPlaySkipForward, IoMap} from "react-icons/io5";
 
 function Workflow({currentState}) {
     const { state: { contract, accounts, isOwner } } = useEth();
@@ -39,7 +38,11 @@ function Workflow({currentState}) {
     // The button will disappear at the end of the workflow
     let nextButton = (
         <button onClick={nextStatus}>
-            Suivant : {statusList[currentState+1]}
+            <div>
+                {<IoPlaySkipForward />}
+            </div>
+            {statusList[currentState+1]}
+            
         </button>
     );
     if (currentState >= 5)
@@ -51,8 +54,11 @@ function Workflow({currentState}) {
     if (isOwner) {
         return (
             <div className="workflowContainer">
-                <div>
-                    Etape : {statusList[currentState]}
+                <div className="currentStateText">
+                    <div>
+                        {<IoMap />}
+                    </div>
+                    {statusList[currentState]}
                 </div>
                 {nextButton}                
             </div>
