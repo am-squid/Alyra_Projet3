@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useEth } from "../contexts/EthContext";
 
 function Whitelist({ currentState, voters, checkVoterState}) {
@@ -9,10 +9,12 @@ function Whitelist({ currentState, voters, checkVoterState}) {
         setNewVoterInput(e.target.value)
     }
 
-    // Adds a voter to the Whitelist    
+    // Adds a voter to the Whitelist if new
     const addToWhitelist = async e => {
+        if(voters.includes(newVoterInput)){
+            return;
+        }
         await contract.methods.addVoter(newVoterInput).send({ from: accounts[0] });
-        checkVoterState(accounts[0], newVoterInput);
     }
 
     return(

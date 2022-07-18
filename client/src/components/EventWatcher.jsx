@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useEth } from "../contexts/EthContext";
 
-function EventWatcher({currentState, changeState, addVoter, addToProposalList, addToVoteList, voters, setVoterStatus, votes, setVotedStatus}) {
+function EventWatcher({currentState, changeState, updateVoters, addVoter, addToProposalList, addToVoteList, voters, setVoterStatus, votes, setVotedStatus}) {
     const { state: { contract, accounts } } = useEth();
     const [isInit, setIsInit] = useState(true);
 
@@ -19,12 +19,13 @@ function EventWatcher({currentState, changeState, addVoter, addToProposalList, a
         }        
 
         const listVoter = await contract.getPastEvents('VoterRegistered', { fromBlock: 0, toBlock: 'latest' });
-        listVoter.map((voter) => {
+        let formattedVoterList = listVoter.map((voter) => {
+            console.log("adding new voter as part of the init");
             addVoter(voter.returnValues.voterAddress);
+            return voter.returnValues.voterAddress;
         });
-
         // Updating the voter status 
-        let voterStatus = voters.includes(accounts[0])
+        let voterStatus = formattedVoterList.includes(accounts[0])
         setVoterStatus(voterStatus);
 
         // Next event can only be gathered if the user is a voter
@@ -79,15 +80,17 @@ function EventWatcher({currentState, changeState, addVoter, addToProposalList, a
             })
             .on('data', (event) => {
                 nextStatus(event.returnValues.newStatus);
-            })
+            });
     
             contract.events.VoterRegistered()
             .on('connected', (subscriptionId) => {
                 console.log('VoterRegistered connected');
             })
             .on('data', (event) => {
+                console.log("receiving data from new voter");
                 addVoter(event.returnValues.voterAddress);
-            })
+                setVoterStatus(event.returnValues.voterAddress === accounts[0])
+            });
     
             contract.events.ProposalRegistered()
             .on('connected', (subscriptionId) => {
@@ -95,7 +98,7 @@ function EventWatcher({currentState, changeState, addVoter, addToProposalList, a
             })
             .on('data', async (event) => {
                 addProposal(event)
-            })
+            });
 
             contract.events.Voted()
             .on('connected', (subscriptionId) => {
@@ -103,7 +106,7 @@ function EventWatcher({currentState, changeState, addVoter, addToProposalList, a
             })
             .on('data', async (event) => {
                 addVote(event, true)
-            })
+            });
             
         }
         // Updating the voter status 

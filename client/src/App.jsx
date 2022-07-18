@@ -11,6 +11,7 @@ import Modal from "./components/modal";
 import EventWatcher from "./components/EventWatcher";
 import Vote from "./components/Vote";
 import Result from "./components/Result";
+import { useCallback } from "react";
 
 function App() {
   const [workflowState, setWorkflowState] = useState(0);
@@ -24,15 +25,10 @@ function App() {
   const {isShowing: isVotingVisible, toggle: toggleVoting} = useModal();
   const {isShowing: isResultVisible, toggle: toggleResult} = useModal();
  
-  const addNewVoter = (voter) => {
-    if (voterList.indexOf(voter) > -1) {
-      return;
-    }
-    // Adding the new voter to the list
-    let tempList = voterList;
-    voterList.push(voter);
-    setVoterList(tempList);
-  }
+  const addNewVoter = useCallback((voter) => {
+    console.log('Voter add called');
+    setVoterList(voterList => [...voterList, voter]);
+  });
 
   const calcIfVoter = (userAddress, newAdress) => {
     if(!isVoter)
@@ -50,11 +46,10 @@ function App() {
       }
     });
     // The proposal is a new one, we store it
-    if(isNew) {
-      let tempList = proposalList;
-      tempList.push(proposal);
-      setProposalList(tempList);
+    if(!isNew) {
+      return;
     }
+    setProposalList(proposalList => [...proposalList, proposal]);
   }
 
   const addVoteToList = (vote, liveCount) => {
@@ -69,14 +64,13 @@ function App() {
     if(!isNew){
       return;
     }
-    let tempList = voteList;
-    tempList.push(vote);
-    setVoteList(tempList);
+    setVoteList(voteList => [...voteList, vote]);
+
     // Updating the voteCount for the proposal if live counting is activated
     if(!liveCount){
       return;
     }
-    tempList = proposalList;
+    let tempList = proposalList;
     tempList[vote.proposalId].voteCount++;
     setProposalList(proposalList);
   }
@@ -86,6 +80,7 @@ function App() {
       <EventWatcher 
         currentState={workflowState}
         changeState={setWorkflowState}
+        updateVoters={setVoterList}
         addVoter={addNewVoter}
         addToProposalList={addProposalToList}
         addToVoteList={addVoteToList}
