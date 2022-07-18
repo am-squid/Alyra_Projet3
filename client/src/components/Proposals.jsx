@@ -26,7 +26,7 @@ function Proposals({ currentState, proposals }) {
                 <tbody>
                     {
                         proposals.map((proposal, index) => {
-                            return (<tr><td>{proposal.id}</td><td>{proposal.description}</td><td>{proposal.voteCount}</td></tr>);
+                            return (<tr key={index}><td>{proposal.id}</td><td>{proposal.description}</td><td>{proposal.voteCount}</td></tr>);
                         })
                     }
                 </tbody>
