@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useEth } from "../contexts/EthContext";
 
-function EventWatcher({currentState, changeState, addVoter, addToProposalList, addToVoteList}) {
+function EventWatcher({currentState, changeState, addVoter, addToProposalList, addToVoteList, voters, setVoterStatus}) {
     const { state: { contract, accounts, isOwner } } = useEth();
     const [isInit, setIsInit] = useState(true);
 
     // Refresh and store a list of all events at application's startup
     const refreshEvents = async () => {
+        
         // Watching the workflowState
         let status = await contract.getPastEvents('WorkflowStatusChange', { fromBlock: 0, toBlock: 'latest' });
         if (status.length > 0) {
@@ -22,15 +23,22 @@ function EventWatcher({currentState, changeState, addVoter, addToProposalList, a
             addVoter(voter.returnValues.voterAddress);
         });
 
-        const listProposal = await contract.getPastEvents('ProposalRegistered', { fromBlock: 0, toBlock: 'latest' });
-        listProposal.map(async (proposalId) => {
-            addProposal(proposalId);
-        });
+        // Updating the voter status 
+        let voterStatus = voters.includes(accounts[0])
+        setVoterStatus(voterStatus);
 
-        const listVote = await contract.getPastEvents('Voted', { fromBlock: 0, toBlock: 'latest' });
-        listVote.map(async (vote) => {
-            addVote(vote, false);
-        });
+        // Next event can only be gathered if the user is a voter
+        if(voterStatus) {
+            const listProposal = await contract.getPastEvents('ProposalRegistered', { fromBlock: 0, toBlock: 'latest' });
+            listProposal.map(async (proposalId) => {
+                addProposal(proposalId);
+            });
+
+            const listVote = await contract.getPastEvents('Voted', { fromBlock: 0, toBlock: 'latest' });
+            listVote.map(async (vote) => {
+                addVote(vote, false);
+            });
+        }
     }
 
     const nextStatus = (statusNb) => {

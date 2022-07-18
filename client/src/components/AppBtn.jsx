@@ -1,6 +1,6 @@
 import { IoIdCard, IoReceipt, IoFileTray, IoTrophy } from "react-icons/io5";
 
-function AppBtn ({type, show, currentState}) {
+function AppBtn ({type, show, currentState, isVoter}) {
 
     const getText = () => {
         let text = "";
@@ -13,11 +13,19 @@ function AppBtn ({type, show, currentState}) {
                     text="Les propositions ne sont pas disponibles";
                     return text;
                 }
+                if (!isVoter) {
+                    text="Vous n'êtes pas autorisé à voir les propositions";
+                    return text;
+                }
                 text="Liste des propositions";
                 return text;
             case "voting": 
                 if(currentState != 3) {
                     text="Les votes ne sont pas ouverts";
+                    return text;
+                }
+                if (!isVoter) {
+                    text="Vous n'êtes pas autorisé à voir les votes";
                     return text;
                 }
                 text="Voter";
@@ -26,6 +34,10 @@ function AppBtn ({type, show, currentState}) {
                 if(currentState != 5) {
                     return "Les résultats ne sont pas encore disponibles";
                 }
+                if (!isVoter) {
+                    text="Vous n'êtes pas autorisé à voir le résultat";
+                    return text;
+                }
                 text="Voir la proposition gagnante";
                 return text;
             default: break;
@@ -33,13 +45,13 @@ function AppBtn ({type, show, currentState}) {
     }
 
     const toggleVisibility = () => {
-        if(currentState < 1 && type === "proposals") {
+        if(type === "proposals" && (currentState < 1 || !isVoter)){
             return;
         }
-        if(currentState != 3 && type === "voting") {
+        if(type === "voting" && (currentState != 3 || !isVoter)) {
             return;
         }
-        if(currentState != 5 && type === "result") {
+        if(type === "result" && (currentState != 5 || !isVoter )) {
             return;
         }
         show();

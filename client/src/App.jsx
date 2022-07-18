@@ -14,6 +14,7 @@ import Result from "./components/Result";
 
 function App() {
   const [workflowState, setWorkflowState] = useState(0);
+  const [isVoter, setIsVoter] = useState(false);
   const [voterList, setVoterList] = useState([]);
   const [proposalList, setProposalList] = useState([]);
   const [voteList, setVoteList] = useState([]);
@@ -80,16 +81,18 @@ function App() {
         addVoter={addNewVoter}
         addToProposalList={addProposalToList}
         addToVoteList={addVoteToList}
+        voters={voterList}
+        setVoterStatus={setIsVoter}
       />
       <div id="App" >
         <div className="container">
-          <Header />
+          <Header isVoter={isVoter}/>
           <Workflow currentState={workflowState}/>
           <div className="btnWrapper">
-            <AppBtn type="voters" show={toggleVoterList} currentState={workflowState}/>
-            <AppBtn type="proposals" show={toggleProposals} currentState={workflowState}/>
-            <AppBtn type="voting" show={toggleVoting} currentState={workflowState}/>
-            <AppBtn type="result" show={toggleResult} currentState={workflowState}/>
+            <AppBtn type="voters" show={toggleVoterList} currentState={workflowState} isVoter={isVoter}/>
+            <AppBtn type="proposals" show={toggleProposals} currentState={workflowState} isVoter={isVoter}/>
+            <AppBtn type="voting" show={toggleVoting} currentState={workflowState} isVoter={isVoter}/>
+            <AppBtn type="result" show={toggleResult} currentState={workflowState} isVoter={isVoter}/>
 
             <Modal isShowing={isVoterListVisible} hide={toggleVoterList} title="Liste des votants">
               <Whitelist currentState={workflowState} voters={voterList}/>

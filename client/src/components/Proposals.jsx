@@ -42,6 +42,15 @@ function Proposals({ currentState, proposals }) {
         </div>
     );
 
+    if(currentState > 1)
+    {
+        voterInput = (
+            <div className="closedItemInformation">
+                Les enregistrements sont fermés
+            </div>
+        );
+    }
+
     return (
         <div className="proposalContainer">
             {proposalBoard}

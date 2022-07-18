@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
 import { useEth } from "../contexts/EthContext";
 
-function Header() {
-    const { state: { contract, accounts, isOwner } } = useEth();
+function Header({isVoter}) {
+    const { state: { accounts, isOwner } } = useEth();
     const [userAddress, setUserAddress] = useState("");
 
     const getUserRole = () => {
+        let message = "";
         if (isOwner) {
-            return "Admin";
+            message += "Vous êtes Admin sur ce contrat. ";
         }
-        return "invité";
+        if (isVoter) {
+            message += "Vous êtes autorisé à voter";
+        }else{
+            message += "Vous n'êtes pas autorisé à voter";
+        }
+        return message;
     }
+
+
+
 
     const updateUserAddress = () => {
         if(accounts !== null) {
@@ -37,7 +46,7 @@ function Header() {
             </div>
             <div className="profileCard">
                 <span>Bonjour {userAddress}</span>
-                <span>Vous êtes {getUserRole()} sur ce contrat</span>
+                <span>{getUserRole()}</span>
             </div>
         </div>
     );
