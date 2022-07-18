@@ -35,7 +35,7 @@ function Proposals({ currentState, proposals }) {
     );
 
     let voterInput = (
-        <div>
+        <div className="voteInput">
             <input type='text' placeholder="Détails de la proposition"
                 value={newProposalInput} onChange={handleNewProposalChange} />
             <button onClick={registerProposal}>Ajouter</button>

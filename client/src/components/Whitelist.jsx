@@ -29,7 +29,7 @@ function Whitelist({ currentState, voters, updateVoterList }) {
     );
 
     let adminInput = (
-        <div>
+        <div className="voteInput">
             <input type='text' placeholder="Ajouter une adresse en tant que voteur"
                 value={newVoterInput} onChange={handleVoterInputChange} />
             <button onClick={addToWhitelist}>Ajouter à la whitelist</button>
@@ -41,6 +41,17 @@ function Whitelist({ currentState, voters, updateVoterList }) {
             <div className="whitelistContainer">
                 {voterBoard}
                 {adminInput}
+            </div>
+        );
+    }
+
+    if (isOwner && currentState > 0) {
+        return (
+            <div className="whitelistContainer">
+                {voterBoard}
+                <div className="closedItemInformation">
+                    Les enregistrements sont fermés
+                </div>
             </div>
         );
     }
