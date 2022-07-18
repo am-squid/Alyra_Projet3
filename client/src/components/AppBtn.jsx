@@ -60,17 +60,17 @@ function AppBtn ({type, show, currentState}) {
         }
     }
 
-    let className = "appBtn";
+    let className = "appBtn enabled";
     if(currentState < 1 && type === "proposals") {
-        className += " disabled";
+        className = "appBtn disabled";
     }
 
     if(currentState != 3 && type === "voting") {
-        className += " disabled";
+        className = "appBtn disabled";
     }
 
     if(currentState != 5 && type === "result") {
-        className += " disabled";
+        className = "appBtn disabled";
     }
 
     return(

@@ -103,7 +103,6 @@ function App() {
             <Modal isShowing={isResultVisible} hide={toggleResult} title="Resultat">
               <Result currentState={workflowState} proposals={proposalList} />
             </Modal>
-            <button onClick={() => {console.log(proposalList)}}>Test</button>
           </div>
         </div>
       </div>

@@ -5,6 +5,8 @@
   align-items: center;
   justify-content: center;
   font-size: 1.6rem;
+  background-color: #161a1d;
+  overflow: hidden;
   --primary-color: #1266cc;
   --secondary-color: #f96400;
   --flash-color: rgb(89, 255, 0);
@@ -144,17 +146,24 @@ hr {
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-  height: 35px;
-  background-color: #1266cc;
-  margin-bottom: 20px;
+  background-color: #2b5876;
+  height: 55px;
+  margin-bottom: 40px;
+  line-height: 27px;
+  padding: 5px;
+  box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
 }
 
 .header span {
   display: block;
 }
 
+.header .profileCard{
+  text-align: right;
+}
+
 .btnWrapper {
-  width: 60%;
+  width: 40%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -162,18 +171,28 @@ hr {
 }
 
 .appBtn {
+  color: #e0e0e0;
   width: 100%;
-  height: 100px;
-  margin-bottom: 10px;
-  background-color: #ead46a;
+  height: 65px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: space-between;
-  line-height: 100px;
+  line-height: 65px;
+  border-radius: 10px;
 }
 
-.appBtn:hover{
-  background-color: #6aea94;
+.enabled{
+  background-size: 300% 100%;
+  background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+  box-shadow: 0 6px 15px 0 rgba(45, 54, 65, 0.75);
+  border-radius: 50px;
+  transition: all .4s ease-in-out;
+}
+
+.enabled:hover{
   cursor: pointer;
+  background-position: 100% 0;
+  transition: all .4s ease-in-out;
 }
 
 .appBtn span{
@@ -181,8 +200,10 @@ hr {
 }
 
 .appBtn .btnImg svg{
-  width: 100%;
-  height: 100%;
+  width: 75%;
+  height: 75%;
+  margin-left: 20px;
+  margin-top: 9px;
 }
 
 .appBtn .btnText {
@@ -190,10 +211,12 @@ hr {
 }
 
 .workflowContainer {
+  color: #e0e0e0;
   height: 50px;
+  line-height: 50px;
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .whitelistContainer {
@@ -289,8 +312,9 @@ hr {
 }
 
 .disabled {
-  background-color: #888;
+  background-color: #0e0e0e;
   cursor: default;
+  border-radius: 50px;
 }
 
 .voteInput {
