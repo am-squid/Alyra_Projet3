@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useEth } from "../contexts/EthContext";
 
-function EventWatcher({currentState, changeState, updateVoters, addVoter, addToProposalList, addToVoteList, voters, setVoterStatus, votes, setVotedStatus}) {
+function EventWatcher({currentState, changeState, addVoter, addToProposalList, addToVoteList, voters, setVoterStatus, votes, setVotedStatus}) {
     const { state: { contract, accounts } } = useEth();
     const [isInit, setIsInit] = useState(true);
 
@@ -20,7 +20,6 @@ function EventWatcher({currentState, changeState, updateVoters, addVoter, addToP
 
         const listVoter = await contract.getPastEvents('VoterRegistered', { fromBlock: 0, toBlock: 'latest' });
         let formattedVoterList = listVoter.map((voter) => {
-            console.log("adding new voter as part of the init");
             addVoter(voter.returnValues.voterAddress);
             return voter.returnValues.voterAddress;
         });
@@ -39,14 +38,6 @@ function EventWatcher({currentState, changeState, updateVoters, addVoter, addToP
             listVote.map(async (vote) => {
                 addVote(vote, false);
             });
-
-            // Updating the voted status 
-            votes.map((vote)=>{
-                if(vote.address === accounts[0])
-                {
-                    setVotedStatus(true);
-                }
-            });
         }
     }
 
@@ -61,6 +52,10 @@ function EventWatcher({currentState, changeState, updateVoters, addVoter, addToP
 
     const addVote = async (vote, liveCount) => {
         addToVoteList({'address':vote.returnValues.voter, 'proposalId': vote.returnValues.proposalId}, liveCount);
+        if(vote.returnValues.voter === accounts[0])
+        {
+            setVotedStatus(true);
+        }
     }
 
     useEffect(() => {
@@ -68,6 +63,7 @@ function EventWatcher({currentState, changeState, updateVoters, addVoter, addToP
         {
             return;
         }
+
         // Initialisation de l'event watcher
         if(isInit) {
             setIsInit(false);
@@ -87,7 +83,6 @@ function EventWatcher({currentState, changeState, updateVoters, addVoter, addToP
                 console.log('VoterRegistered connected');
             })
             .on('data', (event) => {
-                console.log("receiving data from new voter");
                 addVoter(event.returnValues.voterAddress);
                 setVoterStatus(event.returnValues.voterAddress === accounts[0])
             });
@@ -104,8 +99,8 @@ function EventWatcher({currentState, changeState, updateVoters, addVoter, addToP
             .on('connected', (subscriptionId) => {
                 console.log('Voted connected');
             })
-            .on('data', async (event) => {
-                addVote(event, true)
+            .on('data', (event) => {
+                addVote(event, true);
             });
             
         }

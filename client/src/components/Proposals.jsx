@@ -18,9 +18,9 @@ function Proposals({ currentState, proposals }) {
             <table>
                 <thead>
                     <tr>
-                        <td>Numéro</td>
-                        <td>Description</td>
-                        <td>Nombre de vote</td>
+                        <th>Numéro</th>
+                        <th>Description</th>
+                        <th>Nombre de vote</th>
                     </tr>
                 </thead>
                 <tbody>

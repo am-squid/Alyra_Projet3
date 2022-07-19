@@ -26,8 +26,12 @@ function App() {
   const {isShowing: isResultVisible, toggle: toggleResult} = useModal();
  
   const addNewVoter = useCallback((voter) => {
-    console.log('Voter add called');
-    setVoterList(voterList => [...voterList, voter]);
+    setVoterList(voterList => {
+      if(voterList.includes(voter)) {
+        return [...voterList];
+      }
+      return [...voterList, voter];
+    });
   });
 
   const calcIfVoter = (userAddress, newAdress) => {
@@ -38,41 +42,26 @@ function App() {
   }
 
   const addProposalToList = (proposal) => {
-    // Checking if the proposal is new before storing it
-    let isNew = true;
-    proposalList.map((storedProposal) => {
-      if(proposal.id === storedProposal.id) {
-        isNew = false;
+    setProposalList(proposalList => {
+      for(let i = 0; i < proposalList.length; i++) {
+        if(proposalList[i].id === proposal.id) {
+          return [...proposalList];
+        }
       }
+      return [...proposalList, proposal];
     });
-    // The proposal is a new one, we store it
-    if(!isNew) {
-      return;
-    }
-    setProposalList(proposalList => [...proposalList, proposal]);
   }
 
-  const addVoteToList = (vote, liveCount) => {
-    // Checking if the vote is new before storing it
-    let isNew = true;
-    voteList.map((storedVote) => {
-      if(vote.address === storedVote.address) {
-        isNew = false;
+  const addVoteToList = (vote) => {
+    // Updating the vote list
+    setVoteList(voteList => {      
+      for(let i = 0; i < voteList.length; i++) {
+        if(voteList[i].address === vote.address) {
+          return [...voteList];
+        }
       }
+      return [...voteList, vote];
     });
-    // If the vote is a new one, we store it
-    if(!isNew){
-      return;
-    }
-    setVoteList(voteList => [...voteList, vote]);
-
-    // Updating the voteCount for the proposal if live counting is activated
-    if(!liveCount){
-      return;
-    }
-    let tempList = proposalList;
-    tempList[vote.proposalId].voteCount++;
-    setProposalList(proposalList);
   }
 
   return (
@@ -106,7 +95,7 @@ function App() {
               <Proposals currentState={workflowState} proposals={proposalList}/>
             </Modal>
             <Modal isShowing={isVotingVisible} hide={toggleVoting} title="Voter">
-              <Vote votes={voteList} alreadyVoted={hasVoted} setVotedState={setHasVoted}/>
+              <Vote votes={voteList} alreadyVoted={hasVoted} setVotedState={setHasVoted} proposals={proposalList}/>
             </Modal>
             <Modal isShowing={isResultVisible} hide={toggleResult} title="Resultat">
               <Result currentState={workflowState} proposals={proposalList} />

@@ -265,27 +265,25 @@ hr {
   font-size: 1.8rem;
 }
 
-.proposalContainer {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 1.8rem;
-}
 
-.votesContainer{
+.proposalContainer, .votesContainer{
   height: 100%;
   width: 100%;
   font-size: 1.5rem;
   overflow: auto;
 }
 
-.votesContainer table {
+.proposalContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.proposalContainer table, .votesContainer table {
   width: 100%;
 }
 
-.votesContainer thead, .votesContainer td{
+.proposalContainer thead, .proposalContainer.td, .votesContainer thead, .votesContainer td{
   text-align: center;
 }
 
@@ -380,7 +378,7 @@ hr {
   display: flex;
   justify-content: space-between;
 }
-.voteInput input {
+.voteInput input, .voteInput select {
   border-radius: 10px;
   width: 70%;
   height: 30px;
