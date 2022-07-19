@@ -17140,6 +17140,12 @@
     "version": "0.8.14+commit.80d49f37.Emscripten.clang"
   },
   "networks": {
+    "3": {
+      "events": {},
+      "links": {},
+      "address": "0xA025B304c93346f7AFe1Bc1c026C64B02049b28D",
+      "transactionHash": "0x0a3c4869b50db04771a74991d4ebea4018a6f54f37ffb81e71a974ed9f65aae6"
+    },
     "1657741217146": {
       "events": {
         "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
@@ -17802,7 +17808,7 @@
     }
   },
   "schemaVersion": "3.4.8",
-  "updatedAt": "2022-07-19T13:14:12.823Z",
+  "updatedAt": "2022-07-19T13:33:03.376Z",
   "networkType": "ethereum",
   "devdoc": {
     "author": "Yohann Youssouf - promo Ropsten",
